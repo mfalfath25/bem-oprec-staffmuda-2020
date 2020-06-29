@@ -6,5 +6,5 @@ import {Exist,NotExist} from './Components'
 
 export default function Main(props){
 	let { kondisi } = useParams();
-    return kondisi === 'terdaftar' ? <Exist/> : <NotExist/>
+    return kondisi==='terdaftar' ? <Exist/> : <NotExist/>
 }

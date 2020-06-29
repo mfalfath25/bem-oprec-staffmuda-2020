@@ -1,26 +1,26 @@
-export const eventName = "Open Recruitment Staff Filafest"
-export const eventNameAcro = "Oprec Staff Filafest"
-export const eventYear = "2020"
+export const eventName = "Open Recruitment Staff Hology 3.0"
+export const eventNameAcro = "Oprec Staff Hology 3.0"
+export const eventYear = ""
 
 export const definisi = {
-    teks1: "Filkom Anniversary Festival",
-    teks2: "Apa sih Filafest itu?",
-    teks3: "Filkom Anniversary Festival atau biasa disebut Diesnatalis Fakultas Ilmu Komputer yang bertujuan sebagai memperingati perayaan ulang tahun Fakultas Ilmu Komputer ke 9 Tahun yang dimana pelaksanaannya akan melibatkan panitia mahasiswa yang dibawahi oleh Kementrian Pengembangan Sumber Daya Mahasiswa khususnya Direktorat Jendral Pengembangan dan Pemberdayaan Manusia yang akan berkoordinasi dengan pihak dari panitia dosen terkait konsep acara dan pendanaan. Yang dimana dalam pelaksanannya acara Diesnatalis ini melibatkan seluruh Civitas Akademika Fakultas Ilmu Komputer serta Alumni.",
+    teks1: "Hology 3.0",
+    teks2: "Apa sih Hology 3.0 itu?",
+    teks3: "HOLOGY 3.0 merupakan seri ke-3 dari event besar tahunan HOLOGY yang diselenggarakan oleh Fakultas Ilmu Komputer. HOLOGY adalah sebuah kegiatan di bidang Teknologi Informasi dan Komunikasi yang menggabungkan konsep festival dan kompetisi untuk seluruh mahasiswa dari berbagai perguruan tinggi (Perguruan Tinggi Negeri dan Perguruan Tinggi Swasta) di Indonesia.",
 }
 
 export const listTimeline = [
     {
-        tgl: "26 April - 02 Mei 2020",
+        tgl: "30 Juni - 04 Juli 2020",
         desc: "Pendaftaran Online",
         color: "olive"
     },
     {
-        tgl: "30 April - 05 Mei 2020",
+        tgl: "01 Juli - 05 Juli 2020",
         desc: "Online Screening",
         color: "blue"
     },
     {
-        tgl: "07 Mei 2020",
+        tgl: "08 Juli 2020",
         desc: "Pengumuman",
         color: "green"
     }

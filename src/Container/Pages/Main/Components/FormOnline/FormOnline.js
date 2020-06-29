@@ -1,43 +1,45 @@
-import React from 'react';
-import { Form, Button, Header, Message } from "semantic-ui-react";
+import React, { useContext } from 'react';
+import { Form, Button, Header, Message, Dropdown } from "semantic-ui-react";
 // import SemanticDatepicker from 'react-semantic-ui-datepickers';
 // import 'react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css';
+import { Nodux } from '../../../../../Config/Context';
+import { useHistory } from "react-router-dom";
 
 //objek list divisi
 const divisi = [
-    { key: 7, value: 'kestari', text: 'Divisi Kestari' },
-    { key: 1, value: 'acara', text: 'Divisi Acara' },
-    { key: 5, value: 'kreatif', text: 'Divisi Kreatif' },
-    { key: 4, value: 'humas', text: 'Divisi Hubungan Masyarakat' },
-    { key: 11, value: 'ddm', text: 'Divisi DDM' },
-    { key: 8, value: 'transkoper', text: 'Divisi Transkoper' },
-    { key: 6, value: 'kodanus', text: 'Divisi Kodanus' },
-    { key: 10, value: 'sponsor', text: 'Divisi Sponsor' },
-    { key: 9, value: 'kemankes', text: 'Divisi Kemankes' },
+    { key: '0', text: '--Tidak Memilih--', value: 'gakmilih' },
+    { key: '1', text: '--Umum--', value: 'dis', disabled : true },
+    { key: '2', text: 'Sekretasis dan Bendahara', value: 'sekben' },
+    { key: '3', text: '--Event--', value: 'dis', disabled : true },
+    { key: '4', text: 'Divisi Acara', value: 'acara' },
+    { key: '5', text: 'Divisi DDM', value: 'ddm' },
+    { key: '6', text: 'Divisi IT', value: 'it' },
+    { key: '7', text: 'Divisi Humas', value: 'humas' },
+    { key: '8', text: 'Divisi Marketing', value: 'marketing' },
+    { key: '9', text: '--Competition--', value: 'dis', disabled : true },
+    { key: '10', text: 'Business IT Case', value: 'Business IT Case' },
+    { key: '11', text: 'Smart Device', value: 'Smart Device' },
+    { key: '12', text: 'Game', value: 'Game' },
+    { key: '13', text: 'Programming', value: 'Programming' },
+    { key: '14', text: 'CTF', value: 'CTF' },
+    { key: '15', text: 'App Inov.', value: 'App Inov.' },
 ]
 
 //handle daftar
-const daftar = async (nama, nim, prodi, childProps) => {
+const daftar = async (nam, nim, prodi, datas, history) => {
     const body = {
+        nama: nam,
         nim: nim,
-        nama: nama,
         prodi: prodi,
-        ttl: childProps.find(isi => isi["key"] === "ttl").value,
-        alamatAsal: childProps.find(isi => isi["key"] === "asal").value,
-        alamatTinggal: childProps.find(isi => isi["key"] === "tinggal").value,
-        kontak: childProps.find(isi => isi["key"] === "kontak").value,
-        email: childProps.find(isi => isi["key"] === "email").value,
-        mottoHidup: childProps.find(isi => isi["key"] === "motto").value,
-        pilihan1: childProps.find(isi => isi["key"] === "pilihan1").nilai,
-        alasanMemilih1: childProps.find(isi => isi["key"] === "alasan1").value,
-        pilihan2: childProps.find(isi => isi["key"] === "pilihan2").nilai,
-        alasanMemilih2: childProps.find(isi => isi["key"] === "alasan2").value,
-        linkDrive: childProps.find(isi => isi["key"] === "linkDrive").value
+        kontak: datas.kontak,
+        pilihan1: datas.pilihan1,
+        pilihan2: datas.pilihan2,
+        motivasi: datas.motivasi,
     };
     // console.log("isiBody", body)
     // const URL = "https://bemfilkom.ub.ac.id/secure/api/2020/KapelProkerBesar/";
     // https://cors-anywhere.herokuapp.com/
-    const URL = "https://bemfilkom.ub.ac.id/secure/api/2020/OprecStaffFilafest/";
+    const URL = "https://bemfilkom.ub.ac.id/secure/api/2020/OprecStaffHology/";
     const res = await fetch(URL, {
         method: "POST",
         headers: {
@@ -53,191 +55,79 @@ const daftar = async (nama, nim, prodi, childProps) => {
         alert("Ups!! Terjadi Masalah Koneksi");
         return false;
     } else {
-        // props.history.replace(`/terdaftar`);
+
+        history.push(`/main/terdaftar`);
     }
 };
 
 export default function FormOnline(props) {
     // State untuk form pemohon
+    let history = useHistory();
+    const [state, dispatch] = useContext(Nodux.AuthContext);
+    // console.log('cekstate',state)
     const [pesan, setPesan] = React.useState(false);
-
     const [loading, setLoading] = React.useState(false);
+    const [formdata, setFormData] = React.useState({
+        nim: '',
+        nama: '',
+        prodi: '',
+        kontak: '',
+        pilihan1: '',
+        pilihan2: '',
+        motivasi: ''
+    })
 
-    function useFormInput(initialValue) {
-        const [value, setValue] = React.useState(initialValue);
-
-        const onChange = e => {
-            setValue(e.target.value);
-        }
-
-        return {
-            value,
-            onChange,
-        };
+    const handleChange = (e, val, idx) => {
+        e.preventDefault();
+        setFormData({
+            ...formdata,
+            [idx]: val
+        })
     }
-
-    function useFormDropdown(initialValue) {
-        const [nilai, setValue] = React.useState(initialValue);
-
-        const onChange = e => {
-            console.log(e.target.value)
-            setValue(e.target.textContent)
-        }
-
-        return {
-            onChange,
-            nilai
-        }
-    }
-
-    // let { proker } = useParams();
-
-    const childProps = [
-        {
-            key: "nama",
-            value: props.nama,
-            readOnly: true,
-            label: "Nama",
-            placeholder: "Nama"
-        },
-        {
-            key: "nim",
-            value: props.nim,
-            readOnly: true,
-            label: "NIM",
-            placeholder: "NIM"
-        },
-        {
-            key: "prodi",
-            value: props.prodi,
-            readOnly: true,
-            label: "Program Studi",
-            placeholder: "Prodi"
-        },
-        {
-            key: "ttl",
-            ...useFormInput(''),
-            required: true,
-            label: "Tempat Tanggal Lahir",
-            placeholder: "Masukkan Tempat dan Tanggal Lahir"
-        },
-        {
-            key: "asal",
-            ...useFormInput(''),
-            required: true,
-            label: "Alamat Asal",
-            placeholder: "Alamat tempat tinggal asal"
-        },
-        {
-            key: "tinggal",
-            ...useFormInput(''),
-            required: true,
-            label: "Alamat Tinggal",
-            placeholder: "Alamat di Malang"
-        },
-        {
-            key: "kontak",
-            ...useFormInput(''),
-            required: true,
-            label: "Kontak",
-            placeholder: "No. HP/ID Line"
-        },
-        {
-            key: "email",
-            ...useFormInput(''),
-            required: true,
-            label: "Email",
-            placeholder: "Email"
-        },
-        {
-            key: "motto",
-            ...useFormInput(''),
-            required: true,
-            label: "Motto Hidup",
-            placeholder: "Motto"
-        },
-        {
-            key: "pilihan1",
-            ...useFormDropdown(null),
-            required: true,
-            label: "Pilihan Divisi 1",
-            cond: "dropdown",
-            placeholder: "Pilihan Divisi pertama"
-        },
-        {
-            key: "alasan1",
-            ...useFormInput(''),
-            required: true,
-            label: "Alasan Memilih Divisi",
-            cond: "area",
-            placeholder: "Alasan memilih"
-        },
-        {
-            key: "pilihan2",
-            ...useFormDropdown(null),
-            required: true,
-            label: "Pilihan Divisi 2",
-            cond: "dropdown",
-            placeholder: "Pilihan Divisi kedua"
-        },
-        {
-            key: "alasan2",
-            ...useFormInput(''),
-            required: true,
-            label: "Alasan Memilih Divisi",
-            cond: "area",
-            placeholder: "Alasan memilih"
-        },
-        {
-            key: "linkDrive",
-            ...useFormInput(''),
-            required: true,
-            label: "Link Drive",
-            placeholder: "Link drive untuk berkas offline"
-        },
-    ]
 
     return (
         <React.Fragment>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '3vw' }}>
-                <Header textAlign="center" as='h1' content='Form Pendaftaran Online Filafest' />
+                <Header textAlign="center" as='h1' content='Form Pendaftaran Online Hology 3.0' />
                 <div style={{ width: '50vw' }}>
                     <Form onSubmit={() => {
-                        if (childProps.find(isi => isi["cond"] === "dropdown")) {
-                            if ((childProps.find(isi => isi["key"] === "pilihan1").nilai == null) || (childProps.find(isi => isi["key"] === "pilihan2").nilai == null)) {
-                                setPesan(true);
-                            } else {
-                                setLoading(true);
-                                setPesan(false)
-                                daftar(props.nama, props.nim, props.prodi);
-                            }
+                        if ((formdata.pilihan1 === (null || '')) && (formdata.pilihan2 === (null || ''))) {
+                            setPesan(true)
                         } else {
-                            daftar(props.nama, props.nim, props.prodi, childProps);
+                            setLoading(true);
+                            setPesan(false);
+                            daftar(state.nama, state.nim, state.prodi, formdata, history);
                         }
+                        // console.log(formdata)
                     }}>
-                        {
-                            childProps.map((isi) => {
-                                if (isi.cond == "area") {
-                                    return (
-                                        <React.Fragment>
-                                            <Form.TextArea fluid {...isi} />
-                                        </React.Fragment>
-                                    )
-                                } else if (isi.cond == "dropdown") {
-                                    return (
-                                        <React.Fragment>
-                                            <Form.Dropdown required selection clearable fluid options={divisi} {...isi} />
-                                        </React.Fragment>
-                                    )
-                                } else {
-                                    return (
-                                        <React.Fragment>
-                                            <Form.Input fluid {...isi} />
-                                        </React.Fragment>
-                                    )
-                                }
-                            })
-                        }
+                        <Form.Input id='nim' fluid required label='NIM' placeholder='NIM' readOnly value={state.nim} />
+                        <Form.Input id='nama' fluid required label='Nama' placeholder='Nama' readOnly value={state.nama} />
+                        <Form.Input id='prodi' fluid required label='Prodi' placeholder='Prodi' readOnly value={state.prodi} />
+                        <Form.Input id='kontak' fluid required label='ID Line' placeholder='ID Line' onChange={e => { handleChange(e, e.target.value, e.target.id) }} />
+                        <Form.Field>
+                            <label>Pilihan 1</label>
+                            <Dropdown
+                                id='pilihan1'
+                                placeholder='Pilihan pertama'
+                                search
+                                selection
+                                options={divisi.filter(isi => isi.value != 'gakmilih')}
+                                onChange={e => { handleChange(e, e.target.textContent, 'pilihan1') }}
+                            />
+                        </Form.Field>
+                        <Form.Field>
+                            <label>Pilihan 2</label>
+                            <Dropdown
+                                id='pilihan2'
+                                placeholder='Pilihan kedua'
+                                search
+                                selection
+                                options={divisi.filter(isi => isi.text != formdata.pilihan1)}
+                                onChange={e => { handleChange(e, e.target.textContent, 'pilihan2') }}
+                            />
+                        </Form.Field>
+                        <Form.TextArea id='motivasi' fluid label='Motivasi' Placeholder='Motivasi mendaftar' onChange={e => { handleChange(e, e.target.value, e.target.id) }} />
+                        <br />
                         {loading ? (
                             <Button color="blue" loading fluid>
                                 Login

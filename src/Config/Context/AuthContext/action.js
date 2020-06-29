@@ -2,7 +2,7 @@ export const SET_LOGIN = 'SET_LOGIN';
 export const SET_LOGOUT = 'SET_LOGOUT';
 
 //function for set login
-export function handle_login(nim,nama,prodi) {
+export function handle_login(nama,nim,prodi) {
     return {
         type: SET_LOGIN,
         payload: {

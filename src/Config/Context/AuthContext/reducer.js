@@ -17,10 +17,11 @@ export default function reducer(state = initialState, { type, payload }) {
             return {
                 nim: payload.nim,
                 nama: payload.nama,
+                prodi: payload.prodi,
                 isLogged: true
             };
         case actions.SET_LOGOUT:
-            console.log(state)
+            // console.log(state)
             return initialState;
         default:
             return state;

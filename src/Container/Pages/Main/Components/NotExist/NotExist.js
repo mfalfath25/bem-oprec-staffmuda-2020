@@ -5,5 +5,5 @@ import {FormOnline,Closed} from '../../Components';
 
 export default function NotExist(props){
     const [tutup,setTutup] = useState(false);
-    return tutup ? <Closed/> : <FormOnline/>
+    return false ? <Closed/> : <FormOnline/>
 }

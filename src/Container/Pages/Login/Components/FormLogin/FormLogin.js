@@ -13,7 +13,7 @@ const Check_Login = async (nim, pass, dispatch) => {
     };
     try {
         // https://cors-anywhere.herokuapp.com/
-        const res = await fetch("https://cors-anywhere.herokuapp.com/https://bemfilkom.ub.ac.id/secure/api/auth/", {
+        const res = await fetch("https://bemfilkom.ub.ac.id/secure/api/auth/", {
             method: "POST",
             headers: {
                 "content-type": "application/json"
@@ -25,6 +25,7 @@ const Check_Login = async (nim, pass, dispatch) => {
         if (!result.ok) {
             return false;
         } else {
+            // console.log('cek data', data.data)
             dispatch(handle_login(data.data.nama, data.data.nim, data.data.prodi));
             return { "status": true };
         }
@@ -36,7 +37,7 @@ const Check_Login = async (nim, pass, dispatch) => {
 };
 
 export default function FormLogin(props) {
-    console.log("cek prosp", props)
+    // console.log("cek prosp", props)
     const { loading, setLoading, setMessage } = props;
     const [state, dispatch] = useContext(Nodux.AuthContext);
 
@@ -67,13 +68,13 @@ export default function FormLogin(props) {
                     alert("Mohon Maaf Terdapat Masalah Koneksi");
                 } else {
                     try {
-                        let URL = `https://cors-anywhere.herokuapp.com/https://bemfilkom.ub.ac.id/secure/api/2020/OprecStaffFilafest/?check=${nim}`;
+                        let URL = `https://bemfilkom.ub.ac.id/secure/api/2020/OprecStaffHology/?check=${nim}`;
                         const res = await fetch(URL, {
                             method: "GET",
                         });
                         const result = res;
                         const data = await res.json();
-                        // console.log("data check", data);
+                        console.log("data check", data);
                         if (data) {
                             setLoading(false);
                             data.status === 1 ? history.replace(`/main/terdaftar`) : history.replace("/main/notfound");
