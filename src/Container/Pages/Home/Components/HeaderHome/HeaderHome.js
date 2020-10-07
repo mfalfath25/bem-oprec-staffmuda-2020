@@ -11,7 +11,7 @@ const objek = {
 
 export default function HeaderHome(props){
     return (
-        <header className={styles.top} style={{backgroundImage:`url("./img/home-background.jpg")`}}>
+        <header className={styles.top} style={{backgroundImage:`url("./img/home-background.JPG")`}}>
             <div className={styles.headercontain}>
                 <div className={styles.welcome}>{`${eventName} ${eventYear}`}</div>
                 <span className={`${styles.arrow} ${styles.animated} ${styles.bounce}`}></span>

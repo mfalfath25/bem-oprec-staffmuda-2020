@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 
 //import config
 import { Nodux } from './Config/Context/';
@@ -30,7 +30,7 @@ function App() {
         <Route path="/" component={Home} exact />
         <Route path="/login" component={Login} />
         <Route path="/about" component={About} />
-        <PrivateRoute path="/main/:kondisi" component={Main} status={state.isLogged}  />
+        <PrivateRoute path="/main/:kondisi" component={Main} status={state.isLogged} />
       </Switch>
       <Footer />
     </>
