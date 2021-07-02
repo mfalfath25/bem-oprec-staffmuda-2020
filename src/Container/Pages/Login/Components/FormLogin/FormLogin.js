@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 
 //import components
 import { Button, Form } from "semantic-ui-react";
-import { Nodux, handle_login } from '../../../../../Config/Context';
+import { Nodux, handle_login, handle_status } from '../../../../../Config/Context';
 import { useHistory } from 'react-router-dom';
 
 //check authentication
@@ -52,13 +52,15 @@ export default function FormLogin(props) {
 
         //take the value of nim from context
         let nm = nim;
-        let cek1 = nm.substring(0, 2) === "19";
-        let cek2 = nm.substring(0, 2) === "18";
-        let cek3 = nm.substring(3, 6) === "150";
-        let cek4 = nm === "175150400111045";
+        let cek1 = nm.substring(0, 2) === "20";
+        let cek2 = nm.substring(0, 2) === "19";
+        let cek3 = nm.substring(0, 2) === "18";
+        let cek4 = nm.substring(3, 6) === "150";
+        let cek5 = nm === "175150400111045";
+        let cek6 = nm === "195150207111028";
 
         //check if nim is meet the requirements
-        if (nim.length === 15 && (cek1 || cek2 || cek4)) {
+        if (nim.length === 15 && (cek1 || cek5 || cek6)) {
             //run API to get value from function login
             await Check_Login(nim, password, dispatch).then(async (ress) => {
                 let a = ress;
@@ -68,7 +70,7 @@ export default function FormLogin(props) {
                     alert("Mohon Maaf Terdapat Masalah Koneksi");
                 } else {
                     try {
-                        let URL = `https://bemfilkom.ub.ac.id/secure/api/2020/OprecStaffHology/?check=${nim}`;
+                        let URL = `https://bemfilkom.ub.ac.id/secure/api/2020/OprecStaffMuda/?check=${nim}&announce=true`;
                         const res = await fetch(URL, {
                             method: "GET",
                         });
@@ -76,8 +78,10 @@ export default function FormLogin(props) {
                         const data = await res.json();
                         console.log("data check", data);
                         if (data) {
+                            dispatch(handle_status(data.status));
                             setLoading(false);
-                            data.status === 1 ? history.replace(`/main/terdaftar`) : history.replace("/main/notfound");
+                            history.replace(`/main/terdaftar`);
+                            // data.status === 1 ? history.replace(`/main/terdaftar`) : history.replace("/main/notfound");
                         } else {
                             alert("Mohon Maaf Terdapat Masalah Koneksi");
                             setLoading(false);

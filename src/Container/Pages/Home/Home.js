@@ -25,7 +25,7 @@ export default function Home(props) {
                         positive
                         centered
                         onClick={async () => {
-                            props.history.replace("/login");
+                            props.history.replace("/about");
                         }}>
                         <Button.Content visible>Daftar</Button.Content>
                     </Button>

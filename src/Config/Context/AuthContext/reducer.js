@@ -20,6 +20,11 @@ export default function reducer(state = initialState, { type, payload }) {
                 prodi: payload.prodi,
                 isLogged: true
             };
+        case actions.SET_STATUS:
+            return {
+                ...state,
+                status: payload
+            }
         case actions.SET_LOGOUT:
             // console.log(state)
             return initialState;

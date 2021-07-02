@@ -1,17 +1,19 @@
-import React, {useState,useEffect} from 'react';
+import React, { useContext, useState, useEffect } from 'react';
+import { Nodux } from '../../../../../Config/Context';
 
 //import components
 import {Registered,Rejected,Accepted} from '../../Components'
 
 export default function Exist(props){
     const [pengumuman,setPengumuman] = useState(false);
-    const [status,setStatus] = useState(0)
+    // const [status, setStatus] = useState(0)
+    const [state, dispatch] = useContext(Nodux.AuthContext);
 
-    if(pengumuman === false){
+    if(false){
         return(
             <Registered/>
         )
     } else {
-        return status===0 ? <Rejected/> : <Accepted/> 
+        return state.status === 0 ? <Rejected/> : <Accepted/> 
     }
 }

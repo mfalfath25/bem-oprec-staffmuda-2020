@@ -8,7 +8,8 @@ function Nodux() {
         nim : '',
         nama : '',
         prodi : '',
-        isLogged : false
+        isLogged: false,
+        status: 0
     };
 
     const AuthContext = createContext(initialState); //create context

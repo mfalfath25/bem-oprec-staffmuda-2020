@@ -24,7 +24,7 @@ export default function About(props) {
     return (
         <Grid columns={2} containers stackable style={{ marginTop: 0 }}>
             <LeftSide />
-            <RightSide submit={onSubmitHandler} checked={checked} setChecked />
+            <RightSide submit={onSubmitHandler} checked={checked} setChecked={setChecked} />
         </Grid>
     )
 }
